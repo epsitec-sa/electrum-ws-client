@@ -1,0 +1,22 @@
+{
+  "name": "electrum-ws-client",
+  "version": "0.0.1",
+  "description": "Electrum WebSockets library",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/epsitec/electrum-ws-client.git"
+  },
+  "keywords": [
+    "electrum"
+  ],
+  "author": "Epsitec SA",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/epsitec/electrum-ws-client/issues"
+  },
+  "homepage": "https://github.com/epsitec/electrum-ws-client#readme"
+}
