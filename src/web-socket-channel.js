@@ -24,6 +24,14 @@ export class WebSocketChannel {
     });
   }
 
+  send (obj) {
+    if (!this._ws) {
+      throw 'WebSocketChannel must be opened first';
+    }
+
+    this._ws.send (JSON.stringify (obj));
+  }
+
   get ws () {
     return this._ws;
   }
