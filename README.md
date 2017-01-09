@@ -24,3 +24,23 @@ Properties:
   been read by `receive()`.
 * `receiveWaitingCount` &rarr; number of receivers blocked in `receive()`,
   waiting for messages to arrive.
+
+## Performance
+
+Tested against a Kestrel-based WebSocket server, this library performs a
+dialog with an echo service in about 1ms with the following asynchronous
+test code:
+
+```js
+const channel = new WebSocketChannel ('localhost', 54321);
+await channel.open ();
+
+console.time ('perf');
+
+channel.send ({foo: 42});
+const echo = await channel.receive ();
+
+console.timeEnd ('perf');
+
+expect (echo).to.deep.equal ({foo: 42});
+```

@@ -85,6 +85,20 @@ describe ('WebSocketChannel', () => {
       expect (echo).to.deep.equal ({foo: 42});
     });
   });
+
+  describe ('performance measurement', ()=> {
+    it ('gets echo back', async () => {
+      const channel = new WebSocketChannel ('localhost', 54321);
+      await channel.open ();
+      console.time ('perf');
+      for (var i = 0; i < 100; i++) {
+        channel.send ({foo: i});
+        const echo = await channel.receive ();
+        expect (echo).to.deep.equal ({foo: i});
+      }
+      const perf = console.timeEnd ('perf');
+    });
+  });
 });
 
 /******************************************************************************/
