@@ -11,6 +11,11 @@ Constructor:
 * `new WebSocketChannel(server, port, path)`, initializes a web socket without
   opening the connection.
 
+Static methods:
+
+* `create(uri)` &rarr; splits the URI and calls the constructor; returns an
+  instance of `WebSocketChannel`.
+
 Methods:
 
 * `open()` &rarr; promise, asynchronously opens the connection.

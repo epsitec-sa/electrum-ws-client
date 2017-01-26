@@ -1,14 +1,43 @@
 'use strict';
 
 import WebSocket from 'ws';
+import Url from 'url';
+
+import { Correlator } from './correlator.js';
 
 /******************************************************************************/
 
 export class WebSocketChannel {
-  constructor(server = 'localhost', port = '80', path = '') {
+  constructor (server = 'localhost', port = '80', path = '/', correlator = null) {
+    if (path.startsWith ('/')) {
+      path = path.substr (1);
+    }
     this._uri = `ws://${server}:${port}/${path}`;
-    this._waits = [];
-    this._ready = [];
+    this._correlator = correlator || new Correlator ();
+  }
+
+  static create (url, rel, correlator) {
+    if (rel) {
+      if (url.endsWith ('/')) {
+        url = url + rel;
+      } else {
+        url = url + '/' + rel;
+      }
+    }
+
+    const u = Url.parse (url);
+
+    const server = u.hostname;
+    const path   = u.pathname || '/';
+    const port   = u.port ||
+      ((u.protocol == 'http:') && '80') ||
+      ((u.protocol == 'https:') && '443');
+
+    if (!port) {
+      throw new Error (`Unsupported protocol ${u.protocol} for '${url}'`);
+    }
+
+    return new WebSocketChannel (server, port, path, correlator);
   }
 
   open () {
@@ -32,17 +61,8 @@ export class WebSocketChannel {
     return Promise.resolve (this._ws.send (JSON.stringify (obj)));
   }
 
-  receive () {
-    if (this._ready.length > 0) {
-      // Return immediately the already received message
-      const value = this._ready.shift ();
-      return Promise.resolve (value);
-    } else {
-      // Queue a promise which will be resolved when we receive a message
-      const deferred = Promise.defer ();
-      this._waits.push (deferred);
-      return deferred.promise;
-    }
+  receive (id) {
+    return this._correlator.receive (id);
   }
 
   /****************************************************************************/
@@ -51,27 +71,22 @@ export class WebSocketChannel {
     return this._uri;
   }
 
+  get correlator () {
+    return this._correlator;
+  }
+
   get receiveReadyCount () {
-    return this._ready.length;
+    return this.correlator.node ().receiveReadyCount;
   }
 
   get receiveWaitingCount () {
-    return this._waits.length;
+    return this.correlator.node ().receiveWaitingCount;
   }
 
   /****************************************************************************/
 
   _processMessage (json) {
-    if (this._waits.length == 0) {
-      // No receive is waiting for the message; enqueue it for future calls
-      // to receive()
-      this._ready.push (json);
-    } else {
-      // A receive() is blocked waiting for the message; resolve the pending
-      // promise by passing it the specified value
-      const deferred = this._waits.shift ();
-      deferred.resolve (json);
-    }
+    this.correlator.dispatch (json);
   }
 }
 

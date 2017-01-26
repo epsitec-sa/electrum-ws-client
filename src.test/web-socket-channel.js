@@ -1,7 +1,7 @@
 'use strict';
 
-import {expect, clock} from 'mai-chai';
-import {WebSocketChannel} from 'electrum-ws-client';
+import { expect, clock } from 'mai-chai';
+import { WebSocketChannel } from 'electrum-ws-client';
 
 /******************************************************************************/
 
@@ -25,6 +25,29 @@ describe ('WebSocketChannel', () => {
     });
     it ('builds URI, server, port and path provided', () => {
       const channel = new WebSocketChannel ('example.org', 1234, 'echo');
+      expect (channel.uri).to.equal ('ws://example.org:1234/echo');
+    });
+    it ('builds URI, server, port and /path provided', () => {
+      const channel = new WebSocketChannel ('example.org', 1234, '/echo');
+      expect (channel.uri).to.equal ('ws://example.org:1234/echo');
+    });
+  });
+
+  describe ('create()', () => {
+    it ('extracts URI, host only; protocol http:', () => {
+      const channel = WebSocketChannel.create ('http://example.org/');
+      expect (channel.uri).to.equal ('ws://example.org:80/');
+    });
+    it ('extracts URI, server, port and path provided; protocol http:', () => {
+      const channel = WebSocketChannel.create ('http://example.org:1234/echo');
+      expect (channel.uri).to.equal ('ws://example.org:1234/echo');
+    });
+    it ('extracts URI, host and path provided; protocol https:', () => {
+      const channel = WebSocketChannel.create ('https://example.org/echo');
+      expect (channel.uri).to.equal ('ws://example.org:443/echo');
+    });
+    it ('extracts URI, host, port and path provided; protocol ws:', () => {
+      const channel = WebSocketChannel.create ('ws://example.org:1234/echo');
       expect (channel.uri).to.equal ('ws://example.org:1234/echo');
     });
   });
@@ -60,7 +83,7 @@ describe ('WebSocketChannel', () => {
       channel.send ({foo: 42});
       expect (channel.receiveReadyCount).to.equal (0);
       expect (channel.receiveWaitingCount).to.equal (0);
-      await delay (10);
+      await delay (20);
       expect (channel.receiveReadyCount).to.equal (1);
       expect (channel.receiveWaitingCount).to.equal (0);
       const echo = await channel.receive ();
@@ -91,7 +114,7 @@ describe ('WebSocketChannel', () => {
       const channel = new WebSocketChannel ('localhost', 54321);
       await channel.open ();
       const perf = clock ();
-      for (var i = 0; i < 100; i++) {
+      for (let i = 0; i < 100; i++) {
         channel.send ({foo: i});
         const echo = await channel.receive ();
         expect (echo).to.deep.equal ({foo: i});
