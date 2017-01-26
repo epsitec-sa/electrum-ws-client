@@ -5,11 +5,12 @@ import { CorrelatorNode } from './correlator-node.js';
 /******************************************************************************/
 
 export class Correlator {
-  constructor () {
+  constructor (dispatcher) {
     this._nodes = {};
     this._free = [];
     this._next = 0;
     this._default = new CorrelatorNode ();
+    this._dispatcher = dispatcher;
   }
 
   new () {
@@ -46,7 +47,14 @@ export class Correlator {
 
   dispatch (json) {
     const id = json['.cc'];
-    return this.node (id).dispatch (json);
+    const verb = json['.v'];
+    if ((this._dispatcher) &&
+        (id === undefined) &&
+        (verb)) {
+      return this._dispatcher (verb, json);
+    } else {
+      return this.node (id).dispatch (json);
+    }
   }
 
   /****************************************************************************/
