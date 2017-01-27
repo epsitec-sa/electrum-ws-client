@@ -28,9 +28,16 @@ export class Correlator {
     }
   }
 
+  has (id) {
+    return id && this._nodes.hasOwnProperty (id);
+  }
+
   node (id) {
     if (id) {
-      return this._nodes[id];
+      if (this._nodes.hasOwnProperty (id)) {
+        return this._nodes[id];
+      }
+      throw new Error (`Correlation ID ${id} cannot be found`);
     } else {
       return this._default;
     }
@@ -45,15 +52,15 @@ export class Correlator {
     return result;
   }
 
-  dispatch (json) {
-    const id = json['.cc'];
-    const verb = json['.v'];
+  dispatch (obj) {
+    const id = obj['.cc'];
+    const verb = obj['.v'];
     if ((this._dispatcher) &&
         (id === undefined) &&
         (verb)) {
-      return this._dispatcher (verb, json);
+      return this._dispatcher (verb, obj);
     } else {
-      return this.node (id).dispatch (json);
+      return this.node (id).dispatch (obj);
     }
   }
 

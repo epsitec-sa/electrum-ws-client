@@ -47,7 +47,7 @@ describe ('Correlator', () => {
         expect (node.receiveReadyCount).to.equal (1);
         expect (node.receiveWaitingCount).to.equal (0);
         expect (await correlator.receive (node.id)).to.deep.equal ({'.cc': node.id});
-        expect (correlator.node (node.id)).to.be.undefined ();
+        expect (correlator.has (node.id)).to.be.false ();
       });
       it ('receive() before dispatch() awaits future message through promise', async () => {
         const correlator = new Correlator ();
@@ -57,9 +57,10 @@ describe ('Correlator', () => {
         const replyPromise = correlator.receive (node.id);
         expect (node.receiveReadyCount).to.equal (0);
         expect (node.receiveWaitingCount).to.equal (1);
+        expect (correlator.has (node.id)).to.be.true ();
         correlator.dispatch ({'.cc': node.id});
         expect (await replyPromise).to.deep.equal ({'.cc': node.id});
-        expect (correlator.node (node.id)).to.be.undefined ();
+        expect (correlator.has (node.id)).to.be.false ();
       });
     });
   });

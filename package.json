@@ -1,6 +1,6 @@
 {
   "name": "electrum-ws-client",
-  "version": "1.0.1",
+  "version": "1.2.0",
   "description": "Electrum WebSockets library.",
   "main": "lib/index.js",
   "scripts": {
@@ -31,10 +31,10 @@
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "require-self": "^0.1.0",
-    "rimraf": "^2.5.1"
+    "rimraf": "^2.5.1",
+    "ws": "^1.1.1"
   },
   "dependencies": {
-    "url": "^0.11.0",
-    "ws": "^1.1.1"
+    "url": "^0.11.0"
   }
 }

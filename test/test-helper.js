@@ -4,6 +4,7 @@
 // tested outside of a browser environment.
 
 import jsdom from 'jsdom';
+import WebSocket from 'ws';
 
 const doc = jsdom.jsdom ('<!doctype html><html><body><div id="root"/></body></html>');
 const win = doc.defaultView;
@@ -17,6 +18,7 @@ const Chrome49 =
 global.document  = doc;
 global.window    = win;
 global.navigator = {userAgent: Chrome49};
+global.WebSocket = WebSocket;
 
 if (console.debug === undefined) {
   // Setting the userAgent to Chrome triggers a warning in React, which we

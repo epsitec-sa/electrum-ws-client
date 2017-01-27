@@ -1,8 +1,6 @@
 'use strict';
 
-import WebSocket from 'ws';
 import Url from 'url';
-
 import { Correlator } from './correlator.js';
 
 /******************************************************************************/
@@ -67,12 +65,12 @@ export class WebSocketChannel {
 
   /****************************************************************************/
 
-  get uri () {
-    return this._uri;
-  }
-
   get correlator () {
     return this._correlator;
+  }
+
+  get uri () {
+    return this._uri;
   }
 
   get receiveReadyCount () {
