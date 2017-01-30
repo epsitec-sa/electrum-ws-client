@@ -29,7 +29,11 @@ export class WebSocketChannel {
     }
 
     if (rel) {
-      path = path + rel;
+      if (path.endsWith ('/')) {
+        path = path + rel;
+      } else {
+        path = path + '/' + rel;
+      }
     }
     if (query) {
       path = path + '?' + query;

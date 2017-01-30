@@ -54,6 +54,10 @@ describe ('WebSocketChannel', () => {
       const channel = WebSocketChannel.create ('ws://example.org:1234/echo?param=bar');
       expect (channel.uri).to.equal ('ws://example.org:1234/echo?param=bar');
     });
+    it ('with hub name, accepts a query string', () => {
+      const channel = WebSocketChannel.create ('ws://example.org:1234/hubs?p=bar', 'xyz');
+      expect (channel.uri).to.equal ('ws://example.org:1234/hubs/xyz?p=bar');
+    });
   });
 
   describe ('open() on unknown URL', ()=> {
@@ -87,7 +91,7 @@ describe ('WebSocketChannel', () => {
       channel.send ({foo: 42});
       expect (channel.receiveReadyCount).to.equal (0);
       expect (channel.receiveWaitingCount).to.equal (0);
-      await delay (20);
+      await delay (50);
       expect (channel.receiveReadyCount).to.equal (1);
       expect (channel.receiveWaitingCount).to.equal (0);
       const echo = await channel.receive ();
