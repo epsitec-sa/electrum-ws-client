@@ -40,6 +40,9 @@ Properties:
 * `receiveWaitingCount` &rarr; number of receivers blocked in `receive()`,
   waiting for messages to arrive.
 
+Note that the URL may contain a query string. This can be used to pass
+context along with a connection to the web socket server.
+
 ## Correlator
 
 The `Correlator` ensures that when bidirectional RPC is used, responses get

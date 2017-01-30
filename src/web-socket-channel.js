@@ -15,24 +15,24 @@ export class WebSocketChannel {
   }
 
   static create (url, rel, correlator) {
-    if (rel) {
-      if (url.endsWith ('/')) {
-        url = url + rel;
-      } else {
-        url = url + '/' + rel;
-      }
-    }
-
     const u = Url.parse (url);
 
     const server = u.hostname;
-    const path   = u.pathname || '/';
+    let   path   = u.pathname || '/';
+    const query  = u.query;
     const port   = u.port ||
       ((u.protocol == 'http:') && '80') ||
       ((u.protocol == 'https:') && '443');
 
     if (!port) {
       throw new Error (`Unsupported protocol ${u.protocol} for '${url}'`);
+    }
+
+    if (rel) {
+      path = path + rel;
+    }
+    if (query) {
+      path = path + '?' + query;
     }
 
     return new WebSocketChannel (server, port, path, correlator);
