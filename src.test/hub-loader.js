@@ -22,7 +22,7 @@ describe ('HubLoader', () => {
       const loader = new HubLoader ('foo');
       expect (loader.hubName).to.equal ('foo');
       let ready = 0;
-      await loader.load ('ws://localhost:54320', 'x', async hub => {
+      await loader.load ('ws://localhost:54320', async hub => {
         await hub.start ();
         const perf = clock ();
         const reply = await hub.rpc ('Length', {message: 'Hello'});
@@ -39,7 +39,7 @@ describe ('HubLoader', () => {
       const loader = new HubLoader ('foo');
       expect (loader.hubName).to.equal ('foo');
       let ready = 0;
-      await loader.load ('ws://localhost:54320?p=bar', 'x', async hub => {
+      await loader.load ('ws://localhost:54320?p=bar&q=zorg', async hub => {
         await hub.start ();
         const perf = clock ();
         const reply = await hub.rpc ('Length', {message: 'Question'});
@@ -56,7 +56,7 @@ describe ('HubLoader', () => {
       const loader = new HubLoader ('foo');
       expect (loader.hubName).to.equal ('foo');
       let ready = 0;
-      await loader.load ('ws://localhost:54320', 'x', async hub => {
+      await loader.load ('ws://localhost:54320', async hub => {
         hub.registerSink (x => {
           expect (x).to.equal (hub);
           return new Sink (x);

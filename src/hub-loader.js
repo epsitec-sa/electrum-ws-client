@@ -33,7 +33,6 @@ export class HubLoader {
   constructor (hubName) {
     this._hubName = hubName;
     this._hubUri  = null;
-    this._ownUri  = null;
     this._channel = null;
     this._sink    = null;
   }
@@ -54,10 +53,9 @@ export class HubLoader {
     throw new Error ('not implemented');
   }
 
-  async load (hubUri, ownUri, ready, correlator) {
+  async load (hubUri, ready, correlator) {
     this._channel = this._createChannel (hubUri, correlator);
     this._hubUri  = this._channel.uri;
-    this._ownUri  = ownUri;
     await ready (this);
   }
 
