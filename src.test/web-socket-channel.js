@@ -54,6 +54,10 @@ describe ('WebSocketChannel', () => {
       const channel = WebSocketChannel.create ('ws://example.org:1234/echo?param=bar');
       expect (channel.uri).to.equal ('ws://example.org:1234/echo?param=bar');
     });
+    it ('with hub name', () => {
+      const channel = WebSocketChannel.create ('ws://example.org:1234/hubs', 'xyz');
+      expect (channel.uri).to.equal ('ws://example.org:1234/hubs/xyz');
+    });
     it ('with hub name, accepts a query string', () => {
       const channel = WebSocketChannel.create ('ws://example.org:1234/hubs?p=bar', 'xyz');
       expect (channel.uri).to.equal ('ws://example.org:1234/hubs/xyz?p=bar');
