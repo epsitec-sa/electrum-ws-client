@@ -104,7 +104,7 @@ export class HubLoader {
       const func = findFunction (this._sink, verb);
       const args = getArgs (obj);
       if (func && args) {
-        func (...args);
+        func.apply (obj, args);
       } else {
         throw new Error (`Cannot dispatch ${verb} to sink; the function could not be found`);
       }
