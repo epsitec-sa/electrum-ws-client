@@ -6,7 +6,7 @@
   "scripts": {
     "babel": "babel --quiet --out-dir lib src && babel --quiet --out-dir lib.test src.test",
     "clean": "rimraf ./lib && rimraf ./lib.test",
-    "compile": "npm run clean && require-self && npm eslint && npm run babel",
+    "compile": "npm run clean && require-self && npm run eslint && npm run babel",
     "eslint": "eslint src src.test",
     "mocha": "mocha lib.test/**/*.js --require babel-polyfill",
     "prepublish": "npm run compile",
