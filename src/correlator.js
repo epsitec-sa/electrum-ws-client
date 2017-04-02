@@ -1,5 +1,3 @@
-'use strict';
-
 import { CorrelatorNode } from './correlator-node.js';
 
 /******************************************************************************/

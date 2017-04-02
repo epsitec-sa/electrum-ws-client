@@ -1,5 +1,4 @@
-'use strict';
-
+import Trace from 'electrum-trace';
 import { WebSocketChannel } from './web-socket-channel.js';
 import { Correlator } from './correlator.js';
 
@@ -59,7 +58,6 @@ export class HubLoader {
     await ready (this);
   }
 
-
   registerSink (factory) {
     this._sink = factory (this);
   }
@@ -87,11 +85,11 @@ export class HubLoader {
   }
 
   onConnected () {
-    console.log (`Connected to ${this.hubName} at ${this._hubUri}`);
+    Trace.log (`Connected to ${this.hubName} at ${this._hubUri}`);
   }
 
   onError (err) {
-    console.error (`Cannot connect to ${this.hubName}: ${err}`);
+    Trace.error (`Cannot connect to ${this.hubName}: ${err}`);
   }
 
   _createChannel (hubUri, correlator) {

@@ -1,4 +1,4 @@
-'use strict';
+/* global Promise WebSocket */
 
 import Url from 'url';
 import { Correlator } from './correlator.js';
@@ -21,8 +21,8 @@ export class WebSocketChannel {
     let   path   = u.pathname || '/';
     const query  = u.query;
     const port   = u.port ||
-      ((u.protocol == 'http:') && '80') ||
-      ((u.protocol == 'https:') && '443');
+      ((u.protocol === 'http:') && '80') ||
+      ((u.protocol === 'https:') && '443');
 
     if (!port) {
       throw new Error (`Unsupported protocol ${u.protocol} for '${url}'`);
@@ -50,8 +50,8 @@ export class WebSocketChannel {
     return new Promise ((resolve, reject) => {
       this._ws = new WebSocket (this._uri);
       this._ws.onmessage = event => this._processMessage (JSON.parse (event.data));
-      this._ws.onopen = event => resolve ('connected');
-      this._ws.onerror = event => reject (event);
+      this._ws.onopen    = _ => resolve ('connected');
+      this._ws.onerror   = event => reject (event);
     });
   }
 

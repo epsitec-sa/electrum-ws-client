@@ -1,4 +1,4 @@
-'use strict';
+/* global describe it */
 
 import { expect } from 'mai-chai';
 import { Correlator } from 'electrum-ws-client';
@@ -65,3 +65,5 @@ describe ('Correlator', () => {
     });
   });
 });
+
+/******************************************************************************/

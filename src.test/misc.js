@@ -1,7 +1,9 @@
-'use strict';
+/* global describe it */
 
 import {expect} from 'mai-chai';
 import URL from 'url';
+
+/******************************************************************************/
 
 describe ('URL.parse()', () => {
   it ('decomposes an URL', () => {
@@ -14,3 +16,5 @@ describe ('URL.parse()', () => {
     expect (url.hash).to.equal ('#z');
   });
 });
+
+/******************************************************************************/

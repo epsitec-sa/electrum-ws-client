@@ -1,4 +1,5 @@
-'use strict';
+/* global describe it */
+/* global Promise setTimeout */
 
 import { expect, clock } from 'mai-chai';
 import { WebSocketChannel } from 'electrum-ws-client';
@@ -6,9 +7,9 @@ import { WebSocketChannel } from 'electrum-ws-client';
 /******************************************************************************/
 
 function delay (ms) {
-  return new Promise (function (resolve, reject) {
-      setTimeout (resolve, ms);
-    });
+  return new Promise (function (resolve) {
+    setTimeout (resolve, ms);
+  });
 }
 
 /******************************************************************************/

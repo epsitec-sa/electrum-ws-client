@@ -1,7 +1,8 @@
-'use strict';
+/* global describe it console */
+/* eslint no-console: 0 */
 
 import { expect, clock } from 'mai-chai';
-import { HubLoader, Correlator } from 'electrum-ws-client';
+import { HubLoader } from 'electrum-ws-client';
 
 /******************************************************************************/
 
@@ -65,6 +66,7 @@ describe ('HubLoader', () => {
         const perf = clock ();
         const reply = await hub.send ('Ping', {text: 'Hi'});
         expect (clock (perf)).to.be.at.most (20);
+        expect (reply).to.exist ();
         ready++;
       });
       expect (ready).to.equal (1);
