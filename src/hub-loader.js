@@ -1,6 +1,6 @@
-import Trace from 'electrum-trace';
-import { WebSocketChannel } from './web-socket-channel.js';
-import { Correlator } from './correlator.js';
+import {Trace} from 'electrum-trace';
+import {WebSocketChannel} from './web-socket-channel.js';
+import {Correlator} from './correlator.js';
 
 /******************************************************************************/
 
