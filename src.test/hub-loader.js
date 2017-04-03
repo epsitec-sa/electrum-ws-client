@@ -1,8 +1,8 @@
 /* global describe it console */
 /* eslint no-console: 0 */
 
-import { expect, clock } from 'mai-chai';
-import { HubLoader } from 'electrum-ws-client';
+import {expect, clock} from 'mai-chai';
+import {HubLoader} from 'electrum-ws-client';
 
 /******************************************************************************/
 

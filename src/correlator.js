@@ -1,4 +1,4 @@
-import { CorrelatorNode } from './correlator-node.js';
+import {CorrelatorNode} from './correlator-node.js';
 
 /******************************************************************************/
 

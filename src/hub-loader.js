@@ -73,14 +73,21 @@ export class HubLoader {
 
   async rpc (verb, obj) {
     const node = this._channel.correlator.new ();
-    const request = {'.v': verb, '.cc': node.id, ...obj};
+    const request = {
+      '.v':  verb,
+      '.cc': node.id,
+      ...obj
+    };
     await this._channel.send (request);
     const reply = await this._channel.receive (node.id);
     return reply['.r'];
   }
 
   async send (verb, obj) {
-    const request = {'.v': verb, ...obj};
+    const request = {
+      '.v': verb,
+      ...obj
+    };
     await this._channel.send (request);
   }
 

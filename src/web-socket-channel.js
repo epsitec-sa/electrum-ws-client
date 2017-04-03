@@ -1,7 +1,7 @@
 /* global Promise WebSocket */
 
 import Url from 'url';
-import { Correlator } from './correlator.js';
+import {Correlator} from './correlator.js';
 
 /******************************************************************************/
 

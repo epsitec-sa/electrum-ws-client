@@ -1,8 +1,8 @@
 /* global describe it */
 /* global Promise setTimeout */
 
-import { expect, clock } from 'mai-chai';
-import { WebSocketChannel } from 'electrum-ws-client';
+import {expect, clock} from 'mai-chai';
+import {WebSocketChannel} from 'electrum-ws-client';
 
 /******************************************************************************/
 

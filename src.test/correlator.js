@@ -1,7 +1,7 @@
 /* global describe it */
 
-import { expect } from 'mai-chai';
-import { Correlator } from 'electrum-ws-client';
+import {expect} from 'mai-chai';
+import {Correlator} from 'electrum-ws-client';
 
 /******************************************************************************/
 
