@@ -1,5 +1,10 @@
+/* global require */
 import {CorrelatorNode} from './correlator-node.js';
-
+// NodeJS?
+if (typeof require !== 'undefined') {
+  // Load babel polyfill
+  require ('regenerator-runtime/runtime');
+}
 /******************************************************************************/
 
 export class Correlator {

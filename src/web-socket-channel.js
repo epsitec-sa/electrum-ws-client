@@ -1,4 +1,4 @@
-/* global Promise WebSocket */
+/* global Promise WebSocket require global */
 
 import Url from 'url';
 import {Correlator} from './correlator.js';
@@ -6,23 +6,35 @@ import {Correlator} from './correlator.js';
 /******************************************************************************/
 
 export class WebSocketChannel {
-  constructor (server = 'localhost', port = '80', path = '/', correlator = null) {
+  constructor (
+    server = 'localhost',
+    port = '80',
+    path = '/',
+    correlator = null
+  ) {
     if (path.startsWith ('/')) {
       path = path.substr (1);
     }
     this._uri = `ws://${server}:${port}/${path}`;
     this._correlator = correlator || new Correlator ();
+
+    // NodeJS?
+    if (typeof WebSocket === 'undefined') {
+      // Inject WebSocket w3c compatible API
+      global.WebSocket = require ('websocket').w3cwebsocket;
+    }
   }
 
   static create (url, rel, correlator) {
     const u = Url.parse (url);
 
     const server = u.hostname;
-    let   path   = u.pathname || '/';
-    const query  = u.query;
-    const port   = u.port ||
-      ((u.protocol === 'http:') && '80') ||
-      ((u.protocol === 'https:') && '443');
+    let path = u.pathname || '/';
+    const query = u.query;
+    const port =
+      u.port ||
+      (u.protocol === 'http:' && '80') ||
+      (u.protocol === 'https:' && '443');
 
     if (!port) {
       throw new Error (`Unsupported protocol ${u.protocol} for '${url}'`);
@@ -49,9 +61,10 @@ export class WebSocketChannel {
 
     return new Promise ((resolve, reject) => {
       this._ws = new WebSocket (this._uri);
-      this._ws.onmessage = event => this._processMessage (JSON.parse (event.data));
-      this._ws.onopen    = _ => resolve ('connected');
-      this._ws.onerror   = event => reject (event);
+      this._ws.onmessage = event =>
+        this._processMessage (JSON.parse (event.data));
+      this._ws.onopen = _ => resolve ('connected');
+      this._ws.onerror = event => reject (event);
     });
   }
 
