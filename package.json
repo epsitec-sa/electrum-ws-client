@@ -1,6 +1,6 @@
 {
   "name": "electrum-ws-client",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Electrum WebSockets library.",
   "main": "lib/index.js",
   "scripts": {
