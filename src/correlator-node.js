@@ -1,5 +1,5 @@
 /* global Promise */
-
+import defer from 'promise-defer';
 /******************************************************************************/
 
 export class CorrelatorNode {
@@ -20,7 +20,7 @@ export class CorrelatorNode {
       return Promise.resolve (value);
     } else {
       // Queue a promise which will be resolved when we receive a message
-      const deferred = Promise.defer ();
+      const deferred = defer ();
       this._waits.push (deferred);
       return deferred.promise;
     }
