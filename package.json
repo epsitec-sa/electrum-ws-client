@@ -28,7 +28,9 @@
   "dependencies": {
     "electrum-trace": "^1.1.2",
     "promise-defer": "^1.0.0",
-    "url": "^0.11.0"
+    "regenerator-runtime": "^0.10.5",
+    "url": "^0.11.0",
+    "websocket": "^1.0.24"
   },
   "devDependencies": {
     "babel-env": "^2.3.1",
